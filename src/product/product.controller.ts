@@ -7,13 +7,16 @@ import {
   Patch,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
+import { JwtGuard } from 'src/auth/guard/jwt.guard';
 import { ProductDocument } from './product.schema';
 import { ProductService } from './product.service';
 //http://localhost:5000/product
 @Controller('product')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
+  @UseGuards(JwtGuard)
   @Get()
   findAllProduct(): Promise<ProductDocument[]> {
     return this.productService.findAllProduct();
